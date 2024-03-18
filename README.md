@@ -4,7 +4,7 @@ Feedle is an innovative RSS feed manager plugin designed specifically for Obsidi
 
 ## Why did you create Feedle?
 
-I wanted a drop in RSS solution that just worked, without complicated menus and navigation. While this may lead to a more limited or conservative features set, I believe it offers a more text-based rss feed experience. I look to strike an ideal balance between functionality and configurability, allowing you to tweak the core of the plugin. This will be priority work after the initial MVP is launch and bug are worked out.  It will definitely be in place before v1.
+I wanted a drop in RSS solution that just worked, without complicated menus, setup and navigation. This design decision will lead to a more conservative feature set, it offers an intuitive text-based RSS feed experience that integrates nicely into obsidian. I look to strike an ideal balance between functionality and configurability, allowing you to tweak the core of the plugin. This will be priority work after the initial MVP is launched, and bugs are worked out. It will definitely be in place before v1.
 
 ## Features
 
@@ -49,9 +49,15 @@ We use a simple PR management strategy to ensure that contributions are reviewed
 
 Feedle relies on `@extractus` packages for parsing RSS feed data, Obsidian API's for interacting with editor content, and uses React and Tailwind CSS for rendering custom views.
 
+Feedle integrates well with X's [folder-notes]() plugin. Their is no direct dependency, Feedle is just designed to work this way. If Feedle snippet is in a note, and the note's parent folder has the same name as the Feedle note, Feedle will add new notes to the current folder. Otherwise Feedle will create a new folder with the same name as the Feedle Note in the same directory as the Feedle note.
+
 ## Roadmap
 
 I plan to continue to iterate on Feedle until I am happy with it's functionality and it works reliably.
+
+ - [ ] Settings menu
+ 	 - Configure template (with optional templater integrations) 
+	 - Saved note prefix/suffix/format
 
 ## License
 
