@@ -2,10 +2,13 @@
 	"name": "obsidian-sample-plugin",
 	"version": "1.0.0",
 	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
-	"main": "main.js",
 	"scripts": {
-		"dev": "node esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"dev:esbuild": "node esbuild.config.mjs",
+		"dev:tw": "npx tailwindcss -i ./src/render/global.css -o ./styles.css --watch",
+		"dev": "npm-run-all --parallel dev:*",
+		"build:esbuild": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"build:tw": "npx tailwindcss -i ./src/input.css -o ./styles.css",
+		"build": "npm-run-all --parallel build:*",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
 	"keywords": [],
@@ -13,12 +16,27 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^16.11.6",
+		"@types/react": "^18.2.64",
+		"@types/react-dom": "^18.2.21",
 		"@typescript-eslint/eslint-plugin": "5.29.0",
 		"@typescript-eslint/parser": "5.29.0",
+		"autoprefixer": "^10.4.18",
 		"builtin-modules": "3.3.0",
 		"esbuild": "0.17.3",
+		"esbuild-style-plugin": "^1.6.3",
+		"npm-run-all": "^4.1.5",
 		"obsidian": "latest",
+		"postcss": "^8.4.35",
+		"tailwindcss": "^3.4.1",
 		"tslib": "2.4.0",
 		"typescript": "4.7.4"
+	},
+	"dependencies": {
+		"@extractus/article-extractor": "^8.0.6",
+		"@extractus/feed-extractor": "^7.0.9",
+		"cheerio": "^1.0.0-rc.12",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"unfluffjs": "^3.3.4"
 	}
 }
