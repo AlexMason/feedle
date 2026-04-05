@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import useObsidianApp from "./hooks/useObsidianApp";
 import "./global.css";
 
@@ -12,8 +12,8 @@ import {
 	getReadFromNote,
 	santizeFileName,
 } from "../util/feedle-note-utils";
-import { requestUrl } from "obsidian";
-import { FeedData, FeedEntry, extractFromXml } from "@extractus/feed-extractor";
+import { FeedData, FeedEntry } from "@extractus/feed-extractor";
+import { FeedCacheContext, FeedleSettingsContext } from "../main";
 
 type FeedleAppProps = {
 	config: {
@@ -25,6 +25,8 @@ const PAGE_SIZE = 10;
 
 export function FeedleApp({ config }: FeedleAppProps) {
 	let app = useObsidianApp();
+	let feedCache = useContext(FeedCacheContext);
+	let settings = useContext(FeedleSettingsContext);
 
 	let [rssData, setRSSData] = useState<FeedData>();
 	let [favoriteContent, setFavoriteContent] = useState<string>("");
@@ -35,45 +37,22 @@ export function FeedleApp({ config }: FeedleAppProps) {
 	useEffect(() => {
 		if (!config) return;
 		if (!app || !app.workspace.activeEditor?.editor) return;
+		if (!feedCache) return;
 		if (config.properities["url"]) {
 			setFavoriteContent(
 				getFavoritesFromNote(app.workspace.activeEditor.editor.getValue())
 			);
-
 			setSavedContent(
 				getSavedFromNote(app.workspace.activeEditor.editor.getValue())
 			);
-
 			setReadContent(
 				getReadFromNote(app.workspace.activeEditor.editor.getValue())
 			);
 
-			requestUrl({
-				url: config.properities["url"],
-				headers: {
-					"User-Agent":
-						"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36",
-				},
-			}).then((res) => {
-				let results = extractFromXml(res.text, {
-					// getExtraEntryFields: (feedEntry: any) => {
-					// 	const {} = feedEntry;
-					// 	return {
-					// 		youtubeVideoUrl: ''
-					// 	};
-					// },
-				});
-				console.log("extractFromXml(res.text)", results);
-
-				results.entries = results.entries?.sort((a, b) => {
-					return (
-						(new Date(b.published || "") as any) -
-						(new Date(a.published || "") as any)
-					);
-				});
-
-				setRSSData(results);
-			});
+			const cacheDurationMs = settings.cacheDurationMinutes * 60 * 1000;
+			feedCache
+				.get(config.properities["url"], cacheDurationMs)
+				.then((data) => setRSSData(data));
 		}
 	}, [config]);
 
