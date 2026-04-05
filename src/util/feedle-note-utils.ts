@@ -218,6 +218,49 @@ export function getFavoritesFromNote(note: string): string {
 	return favoriteLines.content;
 }
 
+export function getReadFromNote(note: string): string {
+	let readLines = extractLines(
+		note,
+		(line) => line.trim() === "## Read",
+		(line) => line.trim().startsWith("## ")
+	);
+
+	return readLines.content;
+}
+
+export function addRead(editor: Editor, item: RSSItem) {
+	let fileContentRaw = editor.getValue();
+
+	const feedleNoteConfig = getFeedleNoteConfig(fileContentRaw);
+	if (!feedleNoteConfig) return;
+
+	const read = getReadFromNote(fileContentRaw);
+	if (read.includes(item.link!)) return;
+
+	fileContentRaw = addHeaderIfNotExists(
+		fileContentRaw,
+		2,
+		"Read",
+		(_, idx) => idx === feedleNoteConfig.blockEndIndex + 1
+	);
+
+	fileContentRaw = addLineBelowHeader(
+		fileContentRaw,
+		"Read",
+		` - [${item.title}](${item.link})`
+	);
+
+	editor.setValue(fileContentRaw);
+}
+
+export function removeRead(editor: Editor, item: RSSItem) {
+	let newContent = deleteLines(editor, (line) =>
+		line.includes(`(${item.link})`)
+	);
+
+	editor.setValue(newContent);
+}
+
 export function getSavedFromNote(note: string): string {
 	let savedLines = extractLines(
 		note,
