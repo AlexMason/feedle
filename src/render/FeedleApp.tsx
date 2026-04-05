@@ -52,9 +52,10 @@ export function FeedleApp({ config }: FeedleAppProps) {
 			const cacheDurationMs = settings.cacheDurationMinutes * 60 * 1000;
 			feedCache
 				.get(config.properities["url"], cacheDurationMs)
-				.then((data) => setRSSData(data));
+				.then((data) => setRSSData(data))
+				.catch((err) => console.error("[feedle] feed fetch failed:", err));
 		}
-	}, [config]);
+	}, [config, feedCache, settings]);
 
 	if (!app) return <>Could not load feedle.</>;
 	if (!rssData || !rssData.entries) return <>Could not load feed data.</>;
