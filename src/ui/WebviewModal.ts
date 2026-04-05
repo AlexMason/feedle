@@ -1,7 +1,9 @@
 import { Modal, App } from "obsidian";
+// @ts-ignore
 import type { BrowserView } from "electron";
 
 // Electron is provided by Obsidian's runtime — never bundled
+// @ts-ignore
 import electron from 'electron';
 
 
