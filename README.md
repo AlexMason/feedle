@@ -40,10 +40,7 @@ Feedle has support for aggregated feeds, which are powered by the use of tags. A
 
 You can then create an aggregated feed combining feeds based into an single aggregated view by setting the `type` property in the feedle block to `agg-feed`.
 
-\`\`\`feedle
-type: agg-feed
-tags: cooking
-\`\`\`
+![feed-aggfeed.png](./screenshots/feed-aggfeed.png)
 
 ### Folder notes
 Feedle integrates well with LostPaul's [Folder notes](https://github.com/LostPaul/obsidian-folder-notes) plugin. Their is no direct dependency, Feedle is just designed to work this way. If Feedle snippet is in a note, and the note's parent folder has the same name as the Feedle note, Feedle will add new notes to the current folder. Otherwise Feedle will create a new folder with the same name as the Feedle Note in the same directory as the Feedle note.
