@@ -89,7 +89,7 @@ class FeedleSettingTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						const parsed = parseInt(value, 10);
 						if (!isNaN(parsed) && parsed > 0) {
-							this.plugin.settings.cacheDurationMinutes = parsed;
+							this.plugin.settings = { ...this.plugin.settings, cacheDurationMinutes: parsed };
 							await this.plugin.saveSettings();
 						}
 					})
