@@ -11,7 +11,7 @@ import {
 	getSavedFromNote,
 	getReadFromNote,
 	santizeFileName,
-} from "src/util/feedle-note-utils";
+} from "../util/feedle-note-utils";
 import { requestUrl } from "obsidian";
 import { FeedData, FeedEntry, extractFromXml } from "@extractus/feed-extractor";
 

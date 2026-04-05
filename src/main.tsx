@@ -25,7 +25,7 @@ const DEFAULT_SETTINGS: FeedleSettings = {
 export const ObsidianAppContext = createContext<App | undefined>(undefined);
 
 export default class FeedlePlugin extends Plugin {
-	settings: FeedleSettings;
+	settings: FeedleSettings | null = null;
 	root: Root | null = null;
 
 	async onload() {
@@ -88,15 +88,18 @@ class SampleSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
+		if (this.plugin.settings === null) return;
+		let pluginSettings = this.plugin.settings;
+
 		new Setting(containerEl)
 			.setName("Setting #1")
 			.setDesc("It's a secret")
 			.addText((text) =>
 				text
 					.setPlaceholder("Enter your secret")
-					.setValue(this.plugin.settings.mySetting)
+					.setValue(pluginSettings.mySetting)
 					.onChange(async (value) => {
-						this.plugin.settings.mySetting = value;
+						pluginSettings.mySetting = value;
 						await this.plugin.saveSettings();
 					})
 			);

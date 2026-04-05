@@ -1,5 +1,5 @@
 import { Editor, requestUrl } from "obsidian";
-import { RSSItem } from "src/render/components/RSSItem";
+import { RSSItem } from "../render/components/RSSItem";
 import { App } from "obsidian";
 import unfluff from "unfluffjs";
 import * as cheerio from "cheerio";
@@ -40,11 +40,11 @@ export async function addSaved(app: App, editor: Editor, item: RSSItem) {
 
 	const savedNoteFolderPath =
 		app.workspace.activeEditor?.file?.parent?.name ===
-		app.workspace.activeEditor?.file?.basename
+			app.workspace.activeEditor?.file?.basename
 			? app.workspace.activeEditor?.file?.parent?.path
 			: app.workspace.activeEditor?.file?.parent?.path +
-			  "/" +
-			  app.workspace.activeEditor?.file?.basename;
+			"/" +
+			app.workspace.activeEditor?.file?.basename;
 
 	if (
 		app.workspace.activeEditor &&
@@ -60,9 +60,8 @@ export async function addSaved(app: App, editor: Editor, item: RSSItem) {
 	let contentText = content.text;
 
 	if (item.id.startsWith("yt:video:")) {
-		contentText = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${
-			item.id.split(":video:")[1]
-		}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+		contentText = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${item.id.split(":video:")[1]
+			}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
 	}
 
 	try {
