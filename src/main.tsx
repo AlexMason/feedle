@@ -1,35 +1,37 @@
 import {
 	App,
-	Modal,
-	Notice,
 	Plugin,
 	PluginSettingTab,
 	Setting,
 } from "obsidian";
 
-import { addFavorite, getFeedleNoteConfig } from "./util/feedle-note-utils";
+import { getFeedleNoteConfig } from "./util/feedle-note-utils";
+import { FeedCache } from "./util/FeedCache";
 import { Root, createRoot } from "react-dom/client";
 import { StrictMode, createContext } from "react";
 import * as React from "react";
 import { FeedleApp } from "./render/FeedleApp";
-// Remember to rename these classes and interfaces!
 
 interface FeedleSettings {
-	mySetting: string;
+	cacheDurationMinutes: number;
 }
 
 const DEFAULT_SETTINGS: FeedleSettings = {
-	mySetting: "default",
+	cacheDurationMinutes: 15,
 };
 
 export const ObsidianAppContext = createContext<App | undefined>(undefined);
+export const FeedCacheContext = createContext<FeedCache | undefined>(undefined);
+export const FeedleSettingsContext = createContext<FeedleSettings>(DEFAULT_SETTINGS);
 
 export default class FeedlePlugin extends Plugin {
-	settings: FeedleSettings | null = null;
+	settings: FeedleSettings = DEFAULT_SETTINGS;
+	feedCache: FeedCache = new FeedCache();
 	root: Root | null = null;
 
 	async onload() {
 		await this.loadSettings();
+		this.addSettingTab(new FeedleSettingTab(this.app, this));
 
 		this.registerMarkdownCodeBlockProcessor("feedle", async (src, el, ctx) => {
 			let feedleConfig = getFeedleNoteConfig(`\`\`\`feedle\n${src}\n\`\`\``);
@@ -38,7 +40,11 @@ export default class FeedlePlugin extends Plugin {
 				this.root.render(
 					<StrictMode>
 						<ObsidianAppContext.Provider value={this.app}>
-							<FeedleApp config={feedleConfig} />
+							<FeedCacheContext.Provider value={this.feedCache}>
+								<FeedleSettingsContext.Provider value={this.settings}>
+									<FeedleApp config={feedleConfig} />
+								</FeedleSettingsContext.Provider>
+							</FeedCacheContext.Provider>
 						</ObsidianAppContext.Provider>
 					</StrictMode>
 				);
@@ -59,23 +65,7 @@ export default class FeedlePlugin extends Plugin {
 	}
 }
 
-class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
-
-	onOpen() {
-		const { contentEl } = this;
-		contentEl.setText("Woah!");
-	}
-
-	onClose() {
-		const { contentEl } = this;
-		contentEl.empty();
-	}
-}
-
-class SampleSettingTab extends PluginSettingTab {
+class FeedleSettingTab extends PluginSettingTab {
 	plugin: FeedlePlugin;
 
 	constructor(app: App, plugin: FeedlePlugin) {
@@ -85,22 +75,21 @@ class SampleSettingTab extends PluginSettingTab {
 
 	display(): void {
 		const { containerEl } = this;
-
 		containerEl.empty();
 
-		if (this.plugin.settings === null) return;
-		let pluginSettings = this.plugin.settings;
-
 		new Setting(containerEl)
-			.setName("Setting #1")
-			.setDesc("It's a secret")
+			.setName("Feed cache duration (minutes)")
+			.setDesc("How long to cache feed data before refetching. Default: 15 minutes.")
 			.addText((text) =>
 				text
-					.setPlaceholder("Enter your secret")
-					.setValue(pluginSettings.mySetting)
+					.setPlaceholder("15")
+					.setValue(String(this.plugin.settings.cacheDurationMinutes))
 					.onChange(async (value) => {
-						pluginSettings.mySetting = value;
-						await this.plugin.saveSettings();
+						const parsed = parseInt(value, 10);
+						if (!isNaN(parsed) && parsed > 0) {
+							this.plugin.settings.cacheDurationMinutes = parsed;
+							await this.plugin.saveSettings();
+						}
 					})
 			);
 	}
