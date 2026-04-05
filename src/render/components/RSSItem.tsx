@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import StarIcon from "./icons/StarIcon";
-import BookmarkIcon from "./icons/BookmarkIcon";
+import DownloadIcon from "./icons/DownloadIcon";
 
 import {
 	addFavorite,
@@ -14,6 +14,7 @@ import {
 import useObsidianApp from "../hooks/useObsidianApp";
 import { App } from "obsidian";
 import { FeedEntry } from "@extractus/feed-extractor";
+import { WebviewModal } from "../../ui/WebviewModal";
 
 const feedDateFormat = new Intl.DateTimeFormat("en-US", {
 	dateStyle: "short",
@@ -38,16 +39,17 @@ export default function RSSListItem(props: RSSItemProps) {
 
 	return (
 		<li className="flex gap-1 items-center">
-			<button className="w-8" onClick={() => handleFavoriteButton(props.item)}>
+			<button title="Favorite Article" className="w-8" onClick={() => handleFavoriteButton(props.item)}>
 				<StarIcon fillColor={props.isFavorite ? "currentColor" : "unset"} />
 			</button>{" "}
-			<button className="w-8" onClick={() => handleSaveButton(props.item)}>
-				<BookmarkIcon fillColor={props.isSaved ? "currentColor" : "unset"} />
+			<button title="Save Article in Obsidian" className="w-8" onClick={() => handleSaveButton(props.item)}>
+				<DownloadIcon fillColor={props.isSaved ? "currentColor" : "unset"} />
 			</button>{" "}
 			<a
 				href={props.item.link}
+				title={props.item.title}
 				className={`truncate flex-1${props.isRead ? " opacity-50 line-through" : ""}`}
-				onClick={() => handleReadClick(props.item)}
+				onClick={(e) => { e.preventDefault(); handleReadClick(props.item); }}
 			>
 				{props.item.title}
 			</a>
@@ -93,6 +95,9 @@ export default function RSSListItem(props: RSSItemProps) {
 	}
 
 	function handleReadClick(item: RSSItem) {
+		if (item.link) {
+			new WebviewModal(app, item.link).open();
+		}
 		if (!props.isRead) {
 			if (app && app.workspace.activeEditor?.editor) {
 				addRead(app.workspace.activeEditor.editor, item);

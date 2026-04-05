@@ -600,3 +600,15 @@ video {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
+
+.pr-8 {
+  padding-right: 2rem;
+}
+
+.line-through {
+  text-decoration-line: line-through;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}

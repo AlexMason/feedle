@@ -101,7 +101,7 @@ export function FeedleApp({ config }: FeedleAppProps) {
 					Next Page
 				</button>
 			</div>
-			<ol>
+			<ol className="pr-8">
 				{rssData.entries
 					.slice(page * PAGE_SIZE, page * PAGE_SIZE + 10)
 					.map((item: FeedEntry) => {
