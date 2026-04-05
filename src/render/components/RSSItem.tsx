@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import StarIcon from "./icons/StarIcon";
-import DownloadIcon from "./icons/DownloadIcon";
+import StarIcon from "./icons/StarIcon.js";
+import DownloadIcon from "./icons/DownloadIcon.js";
 
 import {
 	addFavorite,
@@ -9,12 +9,12 @@ import {
 	addSaved,
 	removeFavorite,
 	removeSaved,
-} from "../../util/feedle-note-utils";
+} from "../../util/feedle-note-utils.js";
 
-import useObsidianApp from "../hooks/useObsidianApp";
+import useObsidianApp from "../hooks/useObsidianApp.js";
 import { App } from "obsidian";
 import { FeedEntry } from "@extractus/feed-extractor";
-import { WebviewModal } from "../../ui/WebviewModal";
+import { WebviewModal } from "../../ui/WebviewModal.js";
 
 const feedDateFormat = new Intl.DateTimeFormat("en-US", {
 	dateStyle: "short",

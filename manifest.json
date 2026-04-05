@@ -1,11 +1,11 @@
 {
 	"id": "feedle",
 	"name": "Feedle",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
+	"description": "An RSS feed manager that integrates directly into your Obsidian notes.",
 	"author": "Obsidian",
 	"authorUrl": "https://alexmason.me/",
-	"fundingUrl": "https://alexmason.me/coffee",
+	"fundingUrl": "https://alexmason.me/about",
 	"isDesktopOnly": false
 }

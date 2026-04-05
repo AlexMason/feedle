@@ -1,5 +1,5 @@
 import { Editor, requestUrl } from "obsidian";
-import { RSSItem } from "../render/components/RSSItem";
+import { RSSItem } from "../render/components/RSSItem.js";
 import { App } from "obsidian";
 import unfluff from "unfluffjs";
 import * as cheerio from "cheerio";
@@ -56,7 +56,7 @@ export async function addSaved(app: App, editor: Editor, item: RSSItem) {
 	}
 
 	let res = await requestUrl(item.link!);
-	let content = unfluff(res.text);
+	let content = (unfluff as any)(res.text);
 	let contentText = content.text;
 
 	if (item.id.startsWith("yt:video:")) {

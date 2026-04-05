@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useState, useEffect, useContext } from "react";
-import useObsidianApp from "./hooks/useObsidianApp";
+import useObsidianApp from "./hooks/useObsidianApp.js";
 import "./global.css";
 
-import RSSListItem, { RSSItem } from "./components/RSSItem";
+import RSSListItem, { RSSItem } from "./components/RSSItem.js";
 
 import {
 	getFavoritesFromNote,
@@ -11,9 +11,9 @@ import {
 	getSavedFromNote,
 	getReadFromNote,
 	santizeFileName,
-} from "../util/feedle-note-utils";
+} from "../util/feedle-note-utils.js";
 import { FeedData, FeedEntry } from "@extractus/feed-extractor";
-import { FeedCacheContext, FeedleSettingsContext } from "../main";
+import { FeedCacheContext, FeedleSettingsContext } from "../main.js";
 
 type FeedleAppProps = {
 	config: {
@@ -49,11 +49,11 @@ export function FeedleApp({ config }: FeedleAppProps) {
 				getReadFromNote(app.workspace.activeEditor.editor.getValue())
 			);
 
-			const cacheDurationMs = settings.cacheDurationMinutes * 60 * 1000;
-			feedCache
+			const cacheDurationMs = (settings as any).cacheDurationMinutes * 60 * 1000;
+			(feedCache as any)
 				.get(config.properities["url"], cacheDurationMs)
-				.then((data) => setRSSData(data))
-				.catch((err) => console.error("[feedle] feed fetch failed:", err));
+				.then((data: any) => setRSSData(data))
+				.catch((err: any) => console.error("[feedle] feed fetch failed:", err));
 		}
 	}, [config, feedCache, settings]);
 

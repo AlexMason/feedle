@@ -1,16 +1,16 @@
 import * as React from "react";
 import { useState, useEffect, useContext } from "react";
-import useObsidianApp from "./hooks/useObsidianApp";
+import useObsidianApp from "./hooks/useObsidianApp.js";
 import "./global.css";
-import RSSListItem, { RSSItem } from "./components/RSSItem";
+import RSSListItem, { RSSItem } from "./components/RSSItem.js";
 import {
 	getFavoritesFromNote,
 	getSavedFromNote,
 	getReadFromNote,
 	santizeFileName,
-} from "../util/feedle-note-utils";
+} from "../util/feedle-note-utils.js";
 import { FeedEntry } from "@extractus/feed-extractor";
-import { FeedCacheContext, FeedleSettingsContext } from "../main";
+import { FeedCacheContext, FeedleSettingsContext } from "../main.js";
 
 type AggFeedAppProps = {
 	tags: string[];
@@ -115,8 +115,8 @@ export function AggFeedApp({ tags }: AggFeedAppProps) {
 				return;
 			}
 
-			if (app.workspace.activeEditor?.editor) {
-				const noteText = app.workspace.activeEditor.editor.getValue();
+			if ((app as any).workspace.activeEditor?.editor) {
+				const noteText = (app as any).workspace.activeEditor.editor.getValue();
 				setFavoriteContent(getFavoritesFromNote(noteText));
 				setSavedContent(getSavedFromNote(noteText));
 				setReadContent(getReadFromNote(noteText));
@@ -193,25 +193,25 @@ export function AggFeedApp({ tags }: AggFeedAppProps) {
 	);
 
 	function handleFavoriteChange() {
-		if (app?.workspace.activeEditor?.editor) {
+		if ((app as any).workspace.activeEditor?.editor) {
 			setFavoriteContent(
-				getFavoritesFromNote(app.workspace.activeEditor.editor.getValue())
+				getFavoritesFromNote((app as any).workspace.activeEditor.editor.getValue())
 			);
 		}
 	}
 
 	function handleSavedChange() {
-		if (app?.workspace.activeEditor?.editor) {
+		if ((app as any).workspace.activeEditor?.editor) {
 			setSavedContent(
-				getSavedFromNote(app.workspace.activeEditor.editor.getValue())
+				getSavedFromNote((app as any).workspace.activeEditor.editor.getValue())
 			);
 		}
 	}
 
 	function handleReadChange() {
-		if (app?.workspace.activeEditor?.editor) {
+		if ((app as any).workspace.activeEditor?.editor) {
 			setReadContent(
-				getReadFromNote(app.workspace.activeEditor.editor.getValue())
+				getReadFromNote((app as any).workspace.activeEditor.editor.getValue())
 			);
 		}
 	}

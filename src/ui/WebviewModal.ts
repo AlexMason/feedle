@@ -1,7 +1,9 @@
 import { Modal, App } from "obsidian";
+import type { BrowserView } from "electron";
 
 // Electron is provided by Obsidian's runtime — never bundled
-const { remote } = require("electron");
+import electron from 'electron';
+
 
 interface BrowserChrome {
 	urlBar: HTMLInputElement;
@@ -13,7 +15,7 @@ interface BrowserChrome {
 
 export class WebviewModal extends Modal {
 	private url: string;
-	private browserView: Electron.BrowserView | null = null;
+	private browserView: BrowserView | null = null;
 	private chrome: BrowserChrome | null = null;
 	private resizeObserver: ResizeObserver | null = null;
 
@@ -83,9 +85,9 @@ export class WebviewModal extends Modal {
 
 	/** Attach a real Electron BrowserView to the current OS window */
 	private mountBrowserView(): void {
-		const win = remote.getCurrentWindow();
+		const win = (electron as any).remote.getCurrentWindow();
 
-		const view = new remote.BrowserView({
+		const view = new (electron as any).remote.BrowserView({
 			webPreferences: {
 				nodeIntegration: false,
 				contextIsolation: true,
@@ -117,7 +119,7 @@ export class WebviewModal extends Modal {
 	/** Destroy the BrowserView and remove it from the OS window */
 	private teardownBrowserView(): void {
 		if (!this.browserView) return;
-		const win = remote.getCurrentWindow();
+		const win = (electron as any).remote.getCurrentWindow();
 		win.removeBrowserView(this.browserView);
 		// destroy() exists at runtime but may be missing from type definitions
 		(this.browserView.webContents as any).destroy();

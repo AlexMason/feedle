@@ -5,13 +5,13 @@ import {
 	Setting,
 } from "obsidian";
 
-import { getFeedleNoteConfig } from "./util/feedle-note-utils";
-import { FeedCache } from "./util/FeedCache";
+import { getFeedleNoteConfig } from "./util/feedle-note-utils.js";
+import { FeedCache } from "./util/FeedCache.js";
 import { Root, createRoot } from "react-dom/client";
 import { StrictMode, createContext } from "react";
 import * as React from "react";
-import { FeedleApp } from "./render/FeedleApp";
-import { AggFeedApp } from "./render/AggFeedApp";
+import { FeedleApp } from "./render/FeedleApp.js";
+import { AggFeedApp } from "./render/AggFeedApp.js";
 
 export interface FeedConfig {
 	url: string;
