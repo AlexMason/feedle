@@ -12,17 +12,31 @@ I wanted a drop in RSS solution that just worked, without complicated menus, set
 
 - **Easy RSS Integration**: Add RSS feeds directly into your Obsidian notes with a simple code block.
 - **Automatic Pagination**: Effortlessly browse through feed entries with built-in pagination.
-- **Read / Unread Tracking**: Read articles are tracker. Find stuff you found important.
+- **Read / Unread Tracking**: Read articles are tracked. Rediscover stuff you've previously found important or interesting.
 - **Favorites**: Mark entries as favorites for quick access and reference, enhancing your note-taking workflow.
 - **Save Articles**: Automatically retrieve article content and ingest it into obsidian for easy viewing and note enrichment.
 - **Youtube Video Support**: Detect if the entry is from a youtube channel, and display the video embedded in the note when saved.
 
 ## Installation
 
-1. Open Obsidian and navigate to **Settings** > **Community Plugins**.
-2. Disable **Safe Mode**.
-3. Click on **Browse** and search for **Feedle**.
-4. Install the plugin and then enable it from the list of installed plugins.
+### Via BRAT (Recommended)
+
+[BRAT](https://github.com/TfTHacker/obsidian42-brat) (Beta Reviewers Auto-update Tool) is the easiest way to install Feedle before it is available in the community plugin directory.
+
+1. Install the [BRAT plugin](https://obsidian.md/plugins?id=obsidian42-brat) from the Obsidian community plugins directory.
+2. Enable BRAT in your plugins list.
+3. Open the BRAT settings and click **Add Beta Plugin**.
+4. Enter the repository URL: `https://github.com/AlexMason/feedle`
+5. Click **Add Plugin** and then enable Feedle from your installed plugins list.
+
+BRAT will also automatically notify you when updates are available.
+
+### Manual Installation
+
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/AlexMason/feedle/releases/latest).
+2. Create a folder called `feedle` in your vault's `.obsidian/plugins/` directory.
+3. Copy the three downloaded files into that folder.
+4. Open Obsidian, go to **Settings** > **Community Plugins**, disable **Safe Mode**, and enable Feedle.
 
 ## Usage
 
