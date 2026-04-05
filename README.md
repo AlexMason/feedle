@@ -10,6 +10,7 @@ I wanted a drop in RSS solution that just worked, without complicated menus, set
 
 - **Easy RSS Integration**: Add RSS feeds directly into your Obsidian notes with a simple code block.
 - **Automatic Pagination**: Effortlessly browse through feed entries with built-in pagination.
+- **Read / Unread Tracking**: Read articles are tracker. Find stuff you found important.
 - **Favorites**: Mark entries as favorites for quick access and reference, enhancing your note-taking workflow.
 - **Save Articles**: Automatically retrieve article content and ingest it into obsidian for easy viewing and note enrichment.
 - **Youtube Video Support**: Detect if the entry is from a youtube channel, and display the video embedded in the note when saved.
