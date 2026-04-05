@@ -9,6 +9,7 @@ import {
 	getFavoritesFromNote,
 	getFeedleNoteConfig,
 	getSavedFromNote,
+	getReadFromNote,
 	santizeFileName,
 } from "src/util/feedle-note-utils";
 import { requestUrl } from "obsidian";
@@ -28,6 +29,7 @@ export function FeedleApp({ config }: FeedleAppProps) {
 	let [rssData, setRSSData] = useState<FeedData>();
 	let [favoriteContent, setFavoriteContent] = useState<string>("");
 	let [savedContent, setSavedContent] = useState<string>("");
+	let [readContent, setReadContent] = useState<string>("");
 	let [page, setPage] = useState(0);
 
 	useEffect(() => {
@@ -40,6 +42,10 @@ export function FeedleApp({ config }: FeedleAppProps) {
 
 			setSavedContent(
 				getSavedFromNote(app.workspace.activeEditor.editor.getValue())
+			);
+
+			setReadContent(
+				getReadFromNote(app.workspace.activeEditor.editor.getValue())
 			);
 
 			requestUrl({
@@ -105,8 +111,10 @@ export function FeedleApp({ config }: FeedleAppProps) {
 								item={item}
 								isFavorite={favoriteContent.includes(item.link!)}
 								isSaved={savedContent.includes(santizeFileName(item.title!))}
+								isRead={readContent.includes(item.link!)}
 								onFavoriteChange={handleFavoriteChange}
 								onSaveChange={handleSavedChange}
+								onReadChange={handleReadChange}
 							/>
 						);
 					})}
@@ -133,6 +141,14 @@ export function FeedleApp({ config }: FeedleAppProps) {
 		if (app && app.workspace.activeEditor?.editor) {
 			setSavedContent(
 				getSavedFromNote(app.workspace.activeEditor.editor.getValue())
+			);
+		}
+	}
+
+	function handleReadChange() {
+		if (app && app.workspace.activeEditor?.editor) {
+			setReadContent(
+				getReadFromNote(app.workspace.activeEditor.editor.getValue())
 			);
 		}
 	}

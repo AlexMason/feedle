@@ -5,6 +5,7 @@ import BookmarkIcon from "./icons/BookmarkIcon";
 
 import {
 	addFavorite,
+	addRead,
 	addSaved,
 	removeFavorite,
 	removeSaved,
@@ -26,8 +27,10 @@ type RSSItemProps = {
 	item: FeedEntry;
 	isFavorite: boolean;
 	isSaved: boolean;
+	isRead: boolean;
 	onFavoriteChange?: (item: RSSItem) => void;
 	onSaveChange?: (item: RSSItem) => void;
+	onReadChange?: (item: RSSItem) => void;
 };
 
 export default function RSSListItem(props: RSSItemProps) {
@@ -41,7 +44,11 @@ export default function RSSListItem(props: RSSItemProps) {
 			<button className="w-8" onClick={() => handleSaveButton(props.item)}>
 				<BookmarkIcon fillColor={props.isSaved ? "currentColor" : "unset"} />
 			</button>{" "}
-			<a href={props.item.link} className="truncate flex-1">
+			<a
+				href={props.item.link}
+				className={`truncate flex-1${props.isRead ? " opacity-50 line-through" : ""}`}
+				onClick={() => handleReadClick(props.item)}
+			>
 				{props.item.title}
 			</a>
 			<span className="whitespace-nowrap">
@@ -83,6 +90,15 @@ export default function RSSListItem(props: RSSItemProps) {
 		}
 
 		props.onFavoriteChange && props.onFavoriteChange(item);
+	}
+
+	function handleReadClick(item: RSSItem) {
+		if (!props.isRead) {
+			if (app && app.workspace.activeEditor?.editor) {
+				addRead(app.workspace.activeEditor.editor, item);
+			}
+			props.onReadChange && props.onReadChange(item);
+		}
 	}
 
 	function handleAddFavorite(item: RSSItem) {
