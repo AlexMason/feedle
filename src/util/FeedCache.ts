@@ -23,11 +23,11 @@ export class FeedCache {
 			},
 		});
 
-		const data = extractFromXml(res.text);
+		const data = await extractFromXml(res.text);
 		data.entries = data.entries?.sort(
 			(a, b) =>
-				(new Date(b.published || "") as any) -
-				(new Date(a.published || "") as any)
+				(new Date(b.published || "").getTime() || 0) -
+				(new Date(a.published || "").getTime() || 0)
 		);
 
 		this.cache.set(url, { data, fetchedAt: Date.now() });
