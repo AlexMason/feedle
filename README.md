@@ -2,9 +2,11 @@
 
 Feedle is an innovative RSS feed manager plugin designed specifically for Obsidian.md users who want to seamlessly integrate news feeds into their notes. With Feedle, staying updated with your favorite websites and incorporating valuable insights into your notes has never been easier. Simply insert a Feedle code block with a URL, and let Feedle enrich your notes with the latest content.
 
+![feed-ui.png](./screenshots/feed-ui.png)
+
 ## Why did you create Feedle?
 
-I wanted a drop in RSS solution that just worked, without complicated menus, setup and navigation. This design decision will lead to a more conservative feature set, it offers an intuitive text-based RSS feed experience that integrates nicely into obsidian. I look to strike an ideal balance between functionality and configurability, allowing you to tweak the core of the plugin. This will be priority work after the initial MVP is launched, and bugs are worked out. It will definitely be in place before v1.
+I wanted a drop in RSS solution that just worked, without complicated menus, setup and navigation. This design decision will lead to a more conservative feature set, it offers an intuitive text-based RSS feed experience that integrates nicely into obsidian. I look to strike an ideal balance between functionality and configurability.
 
 ## Features
 
@@ -24,13 +26,28 @@ I wanted a drop in RSS solution that just worked, without complicated menus, set
 
 ## Usage
 
+### Getting Started
 To start using Feedle, insert a code block into your note and specify the RSS feed URL as follows:
 
-\`\`\`feedle
-url: https://example.com/feed
-\`\`\`
+![feed-basic.png](./screenshots/feed-basic.png)
 
 Feedle will automatically fetch and display the feed entries within your note.
+
+### Tags & Aggregated Feeds
+Feedle has support for aggregated feeds, which are powered by the use of tags. Add a `tags` property to your feedle block and populate it with one or more comma-separated tags.
+
+![feed-tags.png](./screenshots/feed-tags.png)
+
+You can then create an aggregated feed combining feeds based into an single aggregated view by setting the `type` property in the feedle block to `agg-feed`.
+
+\`\`\`feedle
+type: agg-feed
+tags: cooking
+\`\`\`
+
+### Folder notes
+Feedle integrates well with LostPaul's [Folder notes](https://github.com/LostPaul/obsidian-folder-notes) plugin. Their is no direct dependency, Feedle is just designed to work this way. If Feedle snippet is in a note, and the note's parent folder has the same name as the Feedle note, Feedle will add new notes to the current folder. Otherwise Feedle will create a new folder with the same name as the Feedle Note in the same directory as the Feedle note.
+
 
 ## Contributing
 
@@ -47,18 +64,16 @@ We welcome contributions and suggestions to make Feedle even better! If you're i
 We use a simple PR management strategy to ensure that contributions are reviewed and integrated efficiently. Please provide as much information as possible about your changes, including how they improve Feedle or fix an issue.
 
 ## Dependencies
-
 Feedle relies on `@extractus` packages for parsing RSS feed data, Obsidian API's for interacting with editor content, and uses React and Tailwind CSS for rendering custom views.
-
-Feedle integrates well with X's [folder-notes]() plugin. Their is no direct dependency, Feedle is just designed to work this way. If Feedle snippet is in a note, and the note's parent folder has the same name as the Feedle note, Feedle will add new notes to the current folder. Otherwise Feedle will create a new folder with the same name as the Feedle Note in the same directory as the Feedle note.
 
 ## Roadmap
 
 I plan to continue to iterate on Feedle until I am happy with it's functionality and it works reliably.
 
- - [ ] Settings menu
- 	 - Configure template (with optional templater integrations) 
-	 - Saved note prefix/suffix/format
+ - [X] Settings menu
+ - [X] Cache length
+ - [ ] Configure template (with optional templater integrations) 
+ - [ ] Saved note prefix/suffix/format 
 
 ## License
 
