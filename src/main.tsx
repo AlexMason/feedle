@@ -12,7 +12,7 @@ import { StrictMode, createContext } from "react";
 import * as React from "react";
 import { FeedleApp } from "./render/FeedleApp";
 
-interface FeedleSettings {
+export interface FeedleSettings {
 	cacheDurationMinutes: number;
 }
 
@@ -27,7 +27,7 @@ export const FeedleSettingsContext = createContext<FeedleSettings>(DEFAULT_SETTI
 export default class FeedlePlugin extends Plugin {
 	settings: FeedleSettings = DEFAULT_SETTINGS;
 	feedCache: FeedCache = new FeedCache();
-	root: Root | null = null;
+	roots: Set<Root> = new Set();
 
 	async onload() {
 		await this.loadSettings();
@@ -36,8 +36,9 @@ export default class FeedlePlugin extends Plugin {
 		this.registerMarkdownCodeBlockProcessor("feedle", async (src, el, ctx) => {
 			let feedleConfig = getFeedleNoteConfig(`\`\`\`feedle\n${src}\n\`\`\``);
 			if (feedleConfig && feedleConfig.properities["url"]) {
-				this.root = createRoot(el);
-				this.root.render(
+				const root = createRoot(el);
+				this.roots.add(root);
+				root.render(
 					<StrictMode>
 						<ObsidianAppContext.Provider value={this.app}>
 							<FeedCacheContext.Provider value={this.feedCache}>
@@ -53,7 +54,8 @@ export default class FeedlePlugin extends Plugin {
 	}
 
 	onunload() {
-		this.root?.unmount();
+		this.roots.forEach((root) => root.unmount());
+		this.roots.clear();
 	}
 
 	async loadSettings() {
