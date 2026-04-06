@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
-	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"name": "feedle",
+	"version": "0.0.2",
+	"description": "An RSS feed manager that integrates directly into your Obsidian notes.",
 	"scripts": {
 		"dev:esbuild": "node esbuild.config.mjs",
 		"dev:tw": "npx tailwindcss -i ./src/render/global.css -o ./styles.css --watch",
@@ -12,7 +12,8 @@
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Alexander Mason",
+	"repository": "https://github.com/AlexMason/feedle",
 	"license": "MIT",
 	"type": "module",
 	"devDependencies": {
