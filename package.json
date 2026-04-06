@@ -1,7 +1,7 @@
 {
 	"name": "feedle",
 	"version": "0.0.2",
-	"description": "An RSS feed manager that integrates directly into your Obsidian notes.",
+	"description": "An RSS feed manager that integrates directly into your notes.",
 	"scripts": {
 		"dev:esbuild": "node esbuild.config.mjs",
 		"dev:tw": "npx tailwindcss -i ./src/render/global.css -o ./styles.css --watch",

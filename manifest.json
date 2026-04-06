@@ -3,7 +3,7 @@
 	"name": "Feedle",
 	"version": "0.0.2",
 	"minAppVersion": "0.15.0",
-	"description": "An RSS feed manager that integrates directly into your Obsidian notes.",
+	"description": "An RSS feed manager that integrates directly into your notes.",
 	"author": "Obsidian",
 	"authorUrl": "https://alexmason.me/",
 	"fundingUrl": "https://alexmason.me/about",
