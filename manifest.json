@@ -1,8 +1,7 @@
 {
 	"id": "feedle",
 	"name": "Feedle",
-	"version": "0.0.2",
-	"minAppVersion": "0.15.0",
+	"minAppVersion": "1.5.7",
 	"description": "An RSS feed manager that integrates directly into your notes.",
 	"author": "Obsidian",
 	"authorUrl": "https://alexmason.me/",
